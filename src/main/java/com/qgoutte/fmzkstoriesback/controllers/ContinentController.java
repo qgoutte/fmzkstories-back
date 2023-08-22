@@ -26,7 +26,7 @@ public class ContinentController {
     @GetMapping("/continents/{name}")
     public ResponseEntity <Continent> getContinentById(@PathVariable(value ="name") String continentName) throws ResourceNotFoundException {
         Continent continent = continentRepository.findById(continentName)
-                .orElseThrow(() -> new ResourceNotFoundException("Continent not found for this id :: " + continentName));
+                .orElseThrow(() -> new ResourceNotFoundException("Continent not found for this name :: " + continentName));
         return ResponseEntity.ok().body(continent);
     }
 }
