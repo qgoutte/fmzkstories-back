@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface NationRepository extends JpaRepository<Nation, Integer> {
 
-   Optional<List<Nation>> findNationsByContinent(Continent continent);
+   List<Nation> findNationsByContinent(Continent continent);
 
    Optional<Nation> findNationByName(String name);
 }

@@ -6,10 +6,7 @@ import com.qgoutte.fmzkstoriesback.exception.ResourceNotFoundException;
 import com.qgoutte.fmzkstoriesback.repositories.NationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,19 +28,16 @@ public class NationController {
         return ResponseEntity.ok().body(nation);
     }
 
-    //TODO : Voir le lien pour mettre en param https://stackoverflow.com/questions/7021084/how-do-you-receive-a-url-parameter-with-a-spring-controller-mapping
-    @GetMapping("/nations/continent={continent}")
-    public ResponseEntity <List<Nation>> getNationByContinent(@PathVariable(value = "continent")String continentName) throws ResourceNotFoundException{
-        List<Nation> nation = nationRepository.findNationsByContinent(new Continent(continentName))
-                .orElseThrow(()-> new ResourceNotFoundException("Continent not found for this continent :: " + continentName));
-        return ResponseEntity.ok().body(nation);
+    @RequestMapping("/nations/continent")
+    public @ResponseBody ResponseEntity<List<Nation>> getNationsByContinent(
+            @ModelAttribute(value="continent") String continent) {
+        List<Nation> nations = nationRepository.findNationsByContinent(new Continent(continent));
+        return ResponseEntity.ok().body(nations);
     }
-
-    //TODO : Voir le lien pour mettre en param https://stackoverflow.com/questions/7021084/how-do-you-receive-a-url-parameter-with-a-spring-controller-mapping
-    @GetMapping("/nations/name={name}")
+    @GetMapping("/nations/{name}")
     public ResponseEntity <Nation> getNationByName(@PathVariable(value = "name")String nationName) throws ResourceNotFoundException{
         Nation nation = nationRepository.findNationByName(nationName)
-                .orElseThrow(()-> new ResourceNotFoundException("Continent not found for this name :: " + nationName));
+                .orElseThrow(()-> new ResourceNotFoundException("Nation not found for this name :: " + nationName));
         return ResponseEntity.ok().body(nation);
     }
 
