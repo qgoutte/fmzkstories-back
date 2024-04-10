@@ -28,4 +28,10 @@ public class Nation {
     public Continent getContinent() {
         return continent;
     }
+
+    public Nation(String name) {
+        this.name = name;
+    }
+
+    public Nation() {}
 }

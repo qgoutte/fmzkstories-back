@@ -34,10 +34,11 @@ public class NationController {
         List<Nation> nations = nationRepository.findNationsByContinent(new Continent(continent));
         return ResponseEntity.ok().body(nations);
     }
+
     @GetMapping("/nations/{name}")
-    public ResponseEntity <Nation> getNationByName(@PathVariable(value = "name")String nationName) throws ResourceNotFoundException{
+    public ResponseEntity<Nation> getNationByName(@PathVariable(value = "name") String nationName) throws ResourceNotFoundException {
         Nation nation = nationRepository.findNationByName(nationName)
-                .orElseThrow(()-> new ResourceNotFoundException("Nation not found for this name :: " + nationName));
+                .orElseThrow(() -> new ResourceNotFoundException("Nation not found for this name :: " + nationName));
         return ResponseEntity.ok().body(nation);
     }
 
